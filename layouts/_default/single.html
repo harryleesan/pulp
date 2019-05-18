@@ -3,6 +3,9 @@
   {{ partial "header.html" . }}
   <!-- date -->
   <p class="date">{{ .Date.Format .Site.Params.singlePageDateFormat }}</p>
+  {{if ne .Lastmod .Date }}
+  <p class="date">Updated: {{ .Lastmod.Format .Site.Params.singlePageDateFormat }}</p>
+  {{end}}
   <!-- content -->
   <div id="contentBody">
     {{ .Content }}
