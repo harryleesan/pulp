@@ -1,4 +1,5 @@
 {{ define "main"}}
+  <h1>{{ .Title }}</h1>
   {{ partial "header.html" . }}
   <!-- search box -->
   <div id="searchBox">
@@ -7,9 +8,18 @@
   </div>
   <!-- search results -->
   <div id="searchResults"></div>
+  <!-- tags -->
+  <div id="tags">
+    <ul>
+      {{ range .Site.Taxonomies.tags.ByCount }}
+        <li><a href="{{ .Page.Permalink }}">{{ .Page.Title }} ({{ .Count }})</a></li>
+      {{ end }}
+    </ul>
+  </div>
   <!-- contents -->
   <div id="contentsList">
-    {{ range $index, $value := .Pages.GroupByDate .Site.Params.listPageDateFormat }}
+    {{ $listPageDateFormat := .Site.Params.listPageDateFormat | default "January, 2006"}}
+    {{ range $index, $value := .Pages.GroupByDate $listPageDateFormat }}
     {{ if (ne $index 0) }}
     <hr class="separator">
     {{ end }}
